@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playback Speed Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Squada+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="container">
+    <h1>PLAYBACK SPEED CALCULATOR</h1>
+    <form onsubmit="calculateNewLength(event)">
+        <div class="input-group">
+        <label class="subhead">Content Length:</label>
+            <input type="number" id="hrs" value="0">
+        <label>hrs</label>
+            <input type="number" id="min" value="0">
+        <label>min</label>
+        </div>
+        <div class="input-group">
+        <label class="subhead">Playback Speed:</label>
+            <input type="number" id="speed" step="0.1" value="1.0">
+            <input type="submit" name="calculate" value="Calculate">
+        </div>
+    </form>
+        <div class="result-container">
+        <label class="subhead">New Length:</label> <p id="newlengthslot"></p>
+        </div>
+        <div  class="result-container">
+        <label class="subhead">Time Saved:</label> <p id="timesavedslot"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateNewLength(event) {
+            event.preventDefault();
+
+            const hrs = parseFloat(document.getElementById("hrs").value);
+            const min = parseFloat(document.getElementById("min").value);
+            const speed = parseFloat(document.getElementById("speed").value);
+
+            const totalmin = (hrs * 60) + min;
+            const newlengthinmin = totalmin / speed;
+
+            const newhours = Math.floor(newlengthinmin / 60);
+            const newmin = Math.round(newlengthinmin % 60);
+
+            const timesavedinmin = totalmin - newlengthinmin;
+            const hourssaved = Math.floor(timesavedinmin / 60);
+            const minsaved = Math.round(timesavedinmin % 60);
+
+           // const newlength = ((hrs*60)+min)/speed;
+           // const newhours = Math.round(newlength/60);
+           // const newmin = newlength-(newhours*60);
+           // const timesaved = ((hrs*60)+min)-newlength;
+          //  const hourssaved = Math.round(timesaved/60);
+            //const minssaved = timesaved-(hourssaved*60);
+            
+            const newlengthoutput = document.getElementById("newlengthslot");
+            const timesavedoutput = document.getElementById("timesavedslot");
+
+            newlengthoutput.innerText = `${newhours} hr ${newmin} min`;
+            timesavedoutput.innerText = `${hourssaved} hr ${minsaved} min`;
+            
+        }
+    </script>
+</body>
+</html>
